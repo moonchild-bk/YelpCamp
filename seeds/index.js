@@ -1,0 +1,66 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
+const mongoose = require('mongoose');
+const cities = require('./cities');
+const { places, descriptors } = require('./seedHelpers');
+const Campground = require('../models/campground');
+
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yelp-camp';
+
+mongoose.connect(dbUrl);
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log("Database connected");
+});
+
+const sample = array => array[Math.floor(Math.random() * array.length)];
+
+const seedDB = async () => {
+    await Campground.deleteMany({});
+
+    for (let i = 0; i < 50; i++) {
+        const random1000 = Math.floor(Math.random() * 1000);
+        const price = Math.floor(Math.random() * 20) + 10;
+
+        const camp = new Campground({
+            author: '6a45d70c5afcd520e857aa24',
+
+            location: `${cities[random1000].city}, ${cities[random1000].state}`,
+
+            title: `${sample(descriptors)} ${sample(places)}`,
+
+            description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione cum quidem facilis eaque, assumenda exercitationem nulla iusto dolores eius placeat laborum dolorem in vero rerum aut soluta sed eveniet quas!',
+
+            price,
+
+            geometry: {
+                type: 'Point',
+                coordinates: [
+                    cities[random1000].longitude,
+                    cities[random1000].latitude
+                ]
+            },
+
+            images: [
+                {
+                    url: 'https://res.cloudinary.com/neujendn/image/upload/v1782977412/YelpCamp/dzadax6ajfhsxtvpsce3.jpg',
+                    filename: 'YelpCamp/dzadax6ajfhsxtvpsce3'
+                },
+                {
+                    url: 'https://res.cloudinary.com/neujendn/image/upload/v1782977412/YelpCamp/zsvvv6gw4qinvqb7b9z1.jpg',
+                    filename: 'YelpCamp/zsvvv6gw4qinvqb7b9z1'
+                }
+            ]
+        });
+
+        await camp.save();
+    }
+};
+
+seedDB().then(() => {
+    mongoose.connection.close();
+});
