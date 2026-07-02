@@ -47,12 +47,8 @@ const seedDB = async () => {
 
             images: [
                 {
-                    url: 'https://res.cloudinary.com/neujendn/image/upload/v1782977412/YelpCamp/dzadax6ajfhsxtvpsce3.jpg',
-                    filename: 'YelpCamp/dzadax6ajfhsxtvpsce3'
-                },
-                {
-                    url: 'https://res.cloudinary.com/neujendn/image/upload/v1782977412/YelpCamp/zsvvv6gw4qinvqb7b9z1.jpg',
-                    filename: 'YelpCamp/zsvvv6gw4qinvqb7b9z1'
+                    url: `https://picsum.photos/seed/camp-${i}/800/600`,
+                    filename: `picsum/camp-${i}`
                 }
             ]
         });

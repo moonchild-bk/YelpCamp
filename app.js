@@ -90,6 +90,8 @@ app.use(
                 "https://res.cloudinary.com/neujendn/",
                 "https://images.unsplash.com/",
                 "https://api.maptiler.com/",
+                "https://picsum.photos/",
+                "https://fastly.picsum.photos/"
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
         },

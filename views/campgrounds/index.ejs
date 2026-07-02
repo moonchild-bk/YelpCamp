@@ -1,10 +1,10 @@
 <% layout('layouts/boilerplate') %>
 
-    <div id="cluster-map"></div>
+    <div id="map" style="width: 100%; height: 500px;"></div>
 
     <h1>All Campgrounds</h1>
 
-    <div>
+    <div class="mb-3">
         <a href="/campgrounds/new">Add Campground</a>
     </div>
 
@@ -12,7 +12,11 @@
         <div class="card mb-3">
             <div class="row">
                 <div class="col-md-4">
-                    <img class="img-fluid" alt="" src="<%= campground.images[0].url %>">
+                    <% if (campground.images && campground.images.length) { %>
+                        <img class="img-fluid" alt="" src="<%= campground.images[0].url %>">
+                        <% } else { %>
+                            <img class="img-fluid" alt="" src="https://picsum.photos/seed/fallback/800/600">
+                            <% } %>
                 </div>
 
                 <div class="col-md-8">
@@ -47,7 +51,9 @@
                     features: <%- JSON.stringify( campgrounds.map(campground=> ({
                         type: "Feature",
                         geometry: campground.geometry,
-                        properties: { popUpMarkup: campground?.properties?.popUpMarkup }
+                        properties: {
+                        popUpMarkup: campground?.properties?.popUpMarkup
+                        }
                         }))
                         ) %>
                         };
