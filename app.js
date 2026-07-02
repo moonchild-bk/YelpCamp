@@ -87,11 +87,7 @@ app.use(
                 "'self'",
                 "blob:",
                 "data:",
-                "https://res.cloudinary.com/neujendn/",
-                "https://images.unsplash.com/",
-                "https://api.maptiler.com/",
-                "https://picsum.photos/",
-                "https://fastly.picsum.photos/"
+                "https:"
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
         },
